@@ -6,9 +6,9 @@ This script asks two questions.
 QUESTION 1 — Do our labels agree with KEGG?
     KEGG assigns EC numbers to human genes through its own orthology system
     (KEGG Orthology, KO): a gene inherits an EC number when it belongs to an
-    ortholog group containing characterised enzymes. That is a different
-    evidence route from UniProt's curated EC and GO annotations, so it is a
-    meaningful cross-check. We measure:
+    ortholog group containing characterised enzymes. This checks the EC-backed
+    labels across species, but it rests on the same reaction-level evidence as
+    UniProt EC, so it cannot independently confirm GO-only enzymes. We measure:
       - what fraction of our enzymes KEGG also treats as enzymes
       - how many of our non-enzymes KEGG treats as enzymes
     The second group are candidate mislabels: proteins where UniProt EC and
@@ -284,6 +284,11 @@ def label_agreement(df):
         print(f"  {evidence:<12} {hits:>5} / {len(subset):<5} "
               f"({_pct(hits, len(subset))})")
 
+    print("  Note: KEGG assigns EC numbers through orthology to characterised")
+    print("  reactions, the same kind of evidence behind UniProt EC. Low KEGG")
+    print("  support for GO-only proteins is therefore expected by construction,")
+    print("  and does not by itself show that they are not enzymes.")
+
     # Metabolic pathway membership, descriptive only.
     print("\nIn at least one KEGG metabolic pathway:")
     for label_value, name in config.LABEL_NAMES.items():
@@ -349,14 +354,26 @@ def false_positive_audit(df):
     print(f"Fisher's exact test (one-sided): odds ratio = {odds_ratio:.2f}, "
           f"p = {p_value:.2e}")
 
-    if p_value < 0.05 and odds_ratio > 1:
+    # A test can only find enrichment if there is something to find. If almost
+    # no negatives carry KEGG EC at all, "not significant" means "untestable",
+    # not "the false positives are ordinary errors".
+    total_supported = fp_hits + tn_hits
+    if total_supported < config.MIN_KEGG_SUPPORTED_FOR_TEST:
+        print(f"\nInterpretation: INCONCLUSIVE. Only {total_supported} labelled "
+              f"non-enzyme(s) in the test")
+        print("set carry any KEGG EC number, so this test has almost no power to")
+        print("detect enrichment either way. KEGG's EC assignments track the same")
+        print("kind of reaction-level evidence as UniProt EC, so a protein missing")
+        print("an EC number in UniProt usually lacks one in KEGG too. KEGG cannot")
+        print("tell us whether these false positives are hidden enzymes.")
+    elif p_value < 0.05 and odds_ratio > 1:
         print("\nInterpretation: KEGG enzyme evidence is significantly more")
         print("common among the model's false positives. Part of the apparent")
-        print("error rate is label noise: the model is flagging proteins that")
+        print("error rate may be label noise: the model is flagging proteins that")
         print("an independent database also considers enzymes.")
     else:
-        print("\nInterpretation: no significant enrichment. The false positives")
-        print("look like ordinary model errors rather than hidden enzymes.")
+        print("\nInterpretation: no significant enrichment despite adequate KEGG")
+        print("coverage. The false positives look like ordinary model errors.")
 
     # Highest-confidence candidates, for manual inspection.
     candidates = false_pos[false_pos["kegg_enzyme_evidence"] == True]

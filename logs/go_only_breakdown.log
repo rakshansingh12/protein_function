@@ -1,0 +1,59 @@
+GO-only proteins: 890
+
+Keyword groups (overlapping; will not sum to the total):
+  ATPase / ABC               12  (1.3%)
+  GTPase / Ras / Rab         50  (5.6%)
+  Transporter / channel       5  (0.6%)
+  Helicase                    1  (0.1%)
+  Kinase                     34  (3.8%)
+  Ubiquitin / ligase         39  (4.4%)
+  Name ends in -ase         244  (27.4%)
+  Matches no group          581  (65.3%)
+
+ATPase OR GTPase OR transporter: 67 (7.5%)
+
+Random sample of 25 names (seed 42):
+   UNC5C-like protein
+   Putative inactive deoxyuridine 5'-triphosphate nucleotidohydrolase-like protein FLJ16323
+   E3 ubiquitin-protein ligase RNFT2
+   Mitochondrial ribosome-associated GTPase 1
+   Regulator of G protein signaling 4
+   Carbonic anhydrase-related protein
+   Glutaredoxin-1
+   Putative FK506-binding protein 9-like protein
+   Electron transfer flavoprotein subunit alpha, mitochondrial
+   Unconventional myosin-Ig
+   Ephrin-A3
+   Kinesin-like protein KIF2A
+   Neuronal acetylcholine receptor subunit alpha-4
+   Leucine-rich repeat and guanylate kinase domain-containing protein
+   ADP-ribosylation factor-like protein 13A
+   Regulator of G protein signaling 19
+   Putative ADP-ribosylation factor-like protein 17B
+   DNA repair protein XRCC1
+   GH3 domain-containing protein
+   Zinc finger protein 738
+   Queuine tRNA-ribosyltransferase accessory subunit 2
+   ADP-ribosylation factor-like protein 5A
+   Tubulin beta chain
+   DNA-directed RNA polymerase II subunit RPB11-b2
+   Casein kinase II subunit beta
+
+Random sample of 15 names matching NO group (seed 42):
+   Secernin-2
+   Kinesin-like protein KIF13A
+   Putative elongation factor 1-alpha-like 3
+   Haptoglobin-related protein
+   Kinesin-like protein KIF3C
+   DNA-directed RNA polymerases I, II, and III subunit RPABC5
+   Kinesin-like protein KIFC2
+   Cytochrome b
+   Thioredoxin domain-containing protein 17
+   ADP-ribosylation factor-like protein 6
+   Regulator of G protein signaling 14
+   Septin-10
+   F-box only protein 24
+   Vasopressin-neurophysin 2-copeptin
+   Regulator of G protein signaling 20
+
+Saved -> data/processed/go_only_proteins.csv

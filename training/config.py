@@ -159,6 +159,9 @@ DOWNLOAD_RETRIES = 3
 MIN_EXPECTED_UNIPROT_LINKS = 10000
 MIN_EXPECTED_EC_GENES = 1000
 MIN_EXPECTED_PATHWAY_GENES = 3000
+# The false-positive test is only meaningful if enough labelled non-enzymes in
+# the test set carry KEGG EC numbers for enrichment to be detectable.
+MIN_KEGG_SUPPORTED_FOR_TEST = 10
 # KEGG pathway map numbers below 01300 belong to the Metabolism category
 # (00010-00999 individual pathways, 01100-01240 overview maps).
 KEGG_METABOLIC_MAX = 1300

@@ -8,7 +8,7 @@ without waiting for me, unless a STOP condition occurs.
 
 ## Progress
 
-- [ ] Phase 0 — Preflight and git baseline
+- [x] Phase 0 — Preflight and git baseline — done; all packages already installed, artefacts verified, git initialized, baseline committed (`7c2fa39`)
 - [ ] Phase 1 — KEGG script correction and GO-only characterisation
 - [ ] Phase 2 — AlphaFold pLDDT analysis (analysis only)
 - [ ] Phase 3 — Helper artefacts (sequence index, KEGG pathways, motif stats)

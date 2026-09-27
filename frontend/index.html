@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Protein Function Classifier</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <h1>Protein Function Classifier</h1>
+    <p class="tagline">Enzyme vs non-enzyme classification from sequence-derived physicochemical features.</p>
+    <p class="scope-note">Research prototype trained on reviewed human proteins. Not a definitive annotation tool.</p>
+  </header>
+
+  <main>
+
+    <section class="card" id="input-section">
+      <h2>Input</h2>
+      <label for="sequence-input">Protein sequence (FASTA allowed)</label>
+      <textarea id="sequence-input" rows="8" spellcheck="false" placeholder="Paste a protein sequence, with or without a FASTA header..."></textarea>
+      <div id="input-error" class="error-area" hidden></div>
+      <div class="button-row">
+        <button id="predict-btn" type="button">Predict</button>
+        <button id="clear-btn" type="button" class="secondary">Clear</button>
+        <button id="example-btn" type="button" class="secondary">Load example</button>
+      </div>
+    </section>
+
+    <section class="card" id="prediction-section" hidden>
+      <h2>Prediction</h2>
+      <div id="prediction-result"></div>
+      <div id="dataset-match-banner" hidden></div>
+      <ul id="notes-list" class="notes-list"></ul>
+    </section>
+
+    <section class="card" id="model-performance-section">
+      <h2>Model performance</h2>
+      <div id="model-performance-table"></div>
+      <p class="caption" id="model-performance-caption"></p>
+    </section>
+
+    <section class="card" id="similar-proteins-section" hidden>
+      <h2>Similar proteins</h2>
+      <p class="caption">Nearest neighbours by physicochemical features, within the training split only.</p>
+      <div id="similar-proteins-table"></div>
+    </section>
+
+    <section class="card" id="comparison-section" hidden>
+      <h2>Physicochemical comparison</h2>
+      <div id="comparison-table"></div>
+      <p class="caption" id="instability-note"></p>
+    </section>
+
+    <section class="card" id="motif-section" hidden>
+      <h2>Motif scan</h2>
+      <p class="disclaimer" id="motif-disclaimer"></p>
+      <div id="motif-results"></div>
+      <p class="caption" id="serine-note"></p>
+      <div class="sequence-view">
+        <pre id="sequence-display"></pre>
+      </div>
+    </section>
+
+    <section class="card" id="enrichment-section" hidden>
+      <h2>Database enrichment</h2>
+      <div id="enrichment-results"></div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>This project evaluates multiple machine-learning approaches for enzyme/non-enzyme
+      classification using sequence-derived physicochemical features, combined with
+      database-informed labeling and supplementary biological interpretation.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

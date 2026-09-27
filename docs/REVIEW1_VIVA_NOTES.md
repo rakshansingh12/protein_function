@@ -1,3 +1,5 @@
+Superseded for labelling claims by docs/REVIEW2_VIVA_NOTES.md (GO-only wording).
+
 # Review 1 — Viva Preparation Notes
 
 Everything below is what you should be able to say without reading from a screen.

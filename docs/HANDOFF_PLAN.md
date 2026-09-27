@@ -15,7 +15,7 @@ without waiting for me, unless a STOP condition occurs.
 - [x] Phase 4 — FastAPI backend — done; import + health/model-info/predict/enrich smoke-tested manually (200s, 400s, 404 as expected)
 - [x] Phase 5 — Frontend (exactly 3 files) — done; visually verified in browser (predict, motif highlighting, comparison bars, enrichment, client-side validation), no console errors
 - [x] Phase 6 — Tests, API docs, end-to-end check — done; 23/23 pytest passed, e2e check 6/6 expected status codes
-- [ ] Phase 7 — README, Review 2 viva notes, Review 2 Gamma prompt
+- [x] Phase 7 — README, Review 2 viva notes, Review 2 Gamma prompt — done; fixed stale scipy pin (1.14.1 -> 1.18.1) in backend/requirements.txt
 - [ ] Phase 8 — Final report
 
 ## Resume protocol

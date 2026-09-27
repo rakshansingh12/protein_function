@@ -354,3 +354,44 @@ Saved -> /Users/rakshansingh/Downloads/protein-function-classifier/models/motif_
 ```
 
 A motif found at similar rates in both classes carries little class information in this dataset. This applies to Serine protease-related (simplified) (ratio 1.078) and HEXXH zinc-binding (ratio 1.179). Walker A / P-loop (ratio 3.867) falls outside that range and is not covered by this statement.
+
+## 9. End-to-end check
+
+Server started with `uvicorn backend.app.main:app --port 8000`; full curl output in `logs/e2e_check.log`.
+
+| Check | HTTP status |
+|---|---|
+| GET /api/health | 200 |
+| GET /api/model-info | 200 |
+| POST /api/predict (real dataset sequence, accession O43896) | 200 |
+| POST /api/predict (invalid sequence "HELLO") | 400 |
+| GET /api/enrich/O43896 | 200 |
+| GET / (frontend) | 200 |
+
+Predict response fields (verbatim key list): `prediction`, `probability_enzyme`, `confidence`, `model_name`, `sequence_length`, `cleaned_sequence`, `features`, `comparison`, `similar_proteins`, `motifs`, `dataset_match`, `notes`.
+
+Predict response, scalar/small fields (verbatim):
+
+```json
+{
+  "prediction": "ENZYME",
+  "probability_enzyme": 1.0,
+  "confidence": 1.0,
+  "model_name": "Extra Trees",
+  "sequence_length": 1103,
+  "dataset_match": {
+    "accession": "O43896",
+    "protein_name": "Kinesin-like protein KIF1C",
+    "label": 1,
+    "evidence_class": "GO_only",
+    "in_training_split": true
+  },
+  "notes": [
+    "The model was trained on reviewed human proteins only.",
+    "Headline homology-aware ROC-AUC for Extra Trees: 0.8347.",
+    "This protein was in the model's training split, so this result is not an independent test."
+  ]
+}
+```
+
+Invalid-sequence response body: `{"detail":"Sequence is too short (5 residues). Minimum is 50; physicochemical estimates are unstable on very short fragments."}`

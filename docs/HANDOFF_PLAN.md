@@ -14,7 +14,7 @@ without waiting for me, unless a STOP condition occurs.
 - [x] Phase 3 — Helper artefacts (sequence index, KEGG pathways, motif stats) — done; 20352 sequence hashes (78 collisions), 19020 accessions with a KEGG gene, Walker A/P-loop ratio 3.867 is the only informative motif
 - [x] Phase 4 — FastAPI backend — done; import + health/model-info/predict/enrich smoke-tested manually (200s, 400s, 404 as expected)
 - [x] Phase 5 — Frontend (exactly 3 files) — done; visually verified in browser (predict, motif highlighting, comparison bars, enrichment, client-side validation), no console errors
-- [ ] Phase 6 — Tests, API docs, end-to-end check
+- [x] Phase 6 — Tests, API docs, end-to-end check — done; 23/23 pytest passed, e2e check 6/6 expected status codes
 - [ ] Phase 7 — README, Review 2 viva notes, Review 2 Gamma prompt
 - [ ] Phase 8 — Final report
 

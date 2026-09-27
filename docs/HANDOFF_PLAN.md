@@ -12,7 +12,7 @@ without waiting for me, unless a STOP condition occurs.
 - [x] Phase 1 — KEGG script correction and GO-only characterisation — done; Question 2 now INCONCLUSIVE (1/261 supported), GO-only ATPase/GTPase/transporter share 7.5% (`0a97b1e`)
 - [x] Phase 2 — AlphaFold pLDDT analysis (analysis only) — done; H1 SUPPORTED, H2 SUPPORTED, 0/2890 (0.0%) failures
 - [x] Phase 3 — Helper artefacts (sequence index, KEGG pathways, motif stats) — done; 20352 sequence hashes (78 collisions), 19020 accessions with a KEGG gene, Walker A/P-loop ratio 3.867 is the only informative motif
-- [ ] Phase 4 — FastAPI backend
+- [x] Phase 4 — FastAPI backend — done; import + health/model-info/predict/enrich smoke-tested manually (200s, 400s, 404 as expected)
 - [ ] Phase 5 — Frontend (exactly 3 files)
 - [ ] Phase 6 — Tests, API docs, end-to-end check
 - [ ] Phase 7 — README, Review 2 viva notes, Review 2 Gamma prompt

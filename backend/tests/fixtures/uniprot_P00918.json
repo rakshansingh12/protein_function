@@ -1,0 +1,116 @@
+{
+  "primaryAccession": "P00918",
+  "organism": {
+    "scientificName": "Homo sapiens"
+  },
+  "proteinDescription": {
+    "recommendedName": {
+      "fullName": {
+        "value": "Carbonic anhydrase 2"
+      }
+    }
+  },
+  "comments": [
+    {
+      "commentType": "SUBCELLULAR LOCATION",
+      "note": {
+        "texts": [
+          {
+            "evidences": [
+              {
+                "evidenceCode": "ECO:0000269",
+                "source": "PubMed",
+                "id": "15990874"
+              }
+            ],
+            "value": "Colocalized with SLC26A6 at the surface of the cell membrane in order to form a bicarbonate transport metabolon. Displaced from the cytosolic surface of the cell membrane by PKC in phorbol myristate acetate (PMA)-induced cells"
+          }
+        ]
+      },
+      "subcellularLocations": [
+        {
+          "location": {
+            "evidences": [
+              {
+                "evidenceCode": "ECO:0000269",
+                "source": "PubMed",
+                "id": "15990874"
+              }
+            ],
+            "value": "Cytoplasm",
+            "id": "SL-0086"
+          }
+        },
+        {
+          "location": {
+            "evidences": [
+              {
+                "evidenceCode": "ECO:0000269",
+                "source": "PubMed",
+                "id": "15990874"
+              }
+            ],
+            "value": "Cell membrane",
+            "id": "SL-0039"
+          }
+        }
+      ]
+    }
+  ],
+  "uniProtKBCrossReferences": [
+    {
+      "database": "PDB",
+      "id": "12CA",
+      "properties": [
+        {
+          "key": "Method",
+          "value": "X-ray"
+        },
+        {
+          "key": "Resolution",
+          "value": "2.40 A"
+        },
+        {
+          "key": "Chains",
+          "value": "A=1-260"
+        }
+      ]
+    },
+    {
+      "database": "PDB",
+      "id": "1A42",
+      "properties": [
+        {
+          "key": "Method",
+          "value": "X-ray"
+        },
+        {
+          "key": "Resolution",
+          "value": "2.25 A"
+        },
+        {
+          "key": "Chains",
+          "value": "A=2-260"
+        }
+      ]
+    },
+    {
+      "database": "PDB",
+      "id": "1AM6",
+      "properties": [
+        {
+          "key": "Method",
+          "value": "X-ray"
+        },
+        {
+          "key": "Resolution",
+          "value": "2.00 A"
+        },
+        {
+          "key": "Chains",
+          "value": "A=2-260"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+"""
+Central configuration for the training pipeline.
+
+Every tunable constant lives here so that the pipeline scripts stay short and
+readable, and so that any parameter can be explained and defended in one place.
+"""
+
+from pathlib import Path
+
+# ---------------------------------------------------------------------------
+# Project paths
+# ---------------------------------------------------------------------------
+# config.py lives in training/, so the project root is one level up.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+DATA_DIR = PROJECT_ROOT / "data"
+RAW_DIR = DATA_DIR / "raw"
+PROCESSED_DIR = DATA_DIR / "processed"
+MODELS_DIR = PROJECT_ROOT / "models"
+
+# Raw downloads (one file per UniProt query, kept separate for transparency)
+RAW_EC_CSV = RAW_DIR / "uniprot_ec.csv"
+RAW_GO_CSV = RAW_DIR / "uniprot_go_catalytic.csv"
+RAW_NONENZYME_CSV = RAW_DIR / "uniprot_non_enzyme.csv"
+RAW_SANITY_CSV = RAW_DIR / "uniprot_noncatalytic_families.csv"
+RAW_COMBINED_CSV = RAW_DIR / "uniprot_raw_combined.csv"
+
+# Processed outputs
+PROCESSED_CSV = PROCESSED_DIR / "proteins_labeled.csv"
+FEATURES_CSV = PROCESSED_DIR / "features.csv"
+LABELING_REPORT_JSON = PROCESSED_DIR / "labeling_report.json"
+CLUSTERS_CSV = PROCESSED_DIR / "clusters.csv"
+TEST_PREDICTIONS_CSV = PROCESSED_DIR / "test_predictions.csv"
+KEGG_REPORT_JSON = PROCESSED_DIR / "kegg_validation.json"
+KEGG_CANDIDATES_CSV = PROCESSED_DIR / "kegg_candidate_mislabels.csv"
+
+# KEGG bulk downloads (cached so KEGG is only queried once)
+UNIPROT_KEGG_XREF = RAW_DIR / "uniprot_kegg_xref.tsv"
+KEGG_GENE_EC = RAW_DIR / "kegg_hsa_enzyme.tsv"
+KEGG_GENE_PATHWAY = RAW_DIR / "kegg_hsa_pathway.tsv"
+
+# ---------------------------------------------------------------------------
+# UniProt REST API
+# ---------------------------------------------------------------------------
+UNIPROT_SEARCH_URL = "https://rest.uniprot.org/uniprotkb/search"
+UNIPROT_STREAM_URL = "https://rest.uniprot.org/uniprotkb/stream"
+
+# Fields requested from UniProt. These map 1:1 onto our raw CSV columns.
+UNIPROT_FIELDS = "accession,protein_name,organism_name,length,sequence,ec,go_id"
+
+# Page size for cursor pagination. 500 is the maximum UniProt allows for JSON.
+UNIPROT_PAGE_SIZE = 500
+UNIPROT_TIMEOUT = 60          # seconds per HTTP request
+UNIPROT_MAX_RETRIES = 3
+UNIPROT_RETRY_SLEEP = 3       # seconds between retries
+
+# Restrict to Swiss-Prot (manually reviewed) entries only.
+# Rationale: TrEMBL is machine-annotated, so an absent EC/GO annotation there is
+# far more likely to mean "nobody looked yet" than "genuinely not an enzyme".
+# Using reviewed entries makes the *absence* of an annotation informative.
+REVIEWED_ONLY = True
+
+# Human proteome. Restricting to one well-annotated organism keeps annotation
+# depth roughly uniform across the dataset, which matters because our negative
+# label is defined by absence of annotation.
+ORGANISM_ID = 9606
+
+# ---------------------------------------------------------------------------
+# Consensus labeling
+# ---------------------------------------------------------------------------
+# GO:0003824 is the root "catalytic activity" molecular-function term.
+# IMPORTANT: UniProt entries are almost never annotated with this root term
+# directly; they carry specific descendants (e.g. GO:0004252 serine-type
+# endopeptidase activity). The UniProt search index expands the GO hierarchy,
+# so querying `go:0003824` returns entries annotated with ANY descendant.
+# This is why we resolve GO membership with a *query*, not by string-matching
+# "GO:0003824" inside each entry's go_id list.
+CATALYTIC_GO_TERM = "GO:0003824"
+CATALYTIC_GO_QUERY_ID = "0003824"
+
+# Evidence classes tracked for the labeling report
+EVIDENCE_EC_ONLY = "EC_only"
+EVIDENCE_GO_ONLY = "GO_only"
+EVIDENCE_BOTH = "EC_and_GO"
+EVIDENCE_NEITHER = "neither"
+
+LABEL_ENZYME = 1
+LABEL_NON_ENZYME = 0
+LABEL_NAMES = {LABEL_ENZYME: "enzyme", LABEL_NON_ENZYME: "non_enzyme"}
+
+# Optional sanity check: families that are well documented as non-catalytic.
+# We do NOT label from these; we only measure how much they overlap our
+# predicted-negative set, as an external check that the negatives look sane.
+NON_CATALYTIC_SANITY_QUERIES = {
+    "transport": "keyword:KW-0813",        # Transport
+    "structural": "go:0005198",            # structural molecule activity
+    "immunoglobulin": "family:immunoglobulin",
+}
+
+# ---------------------------------------------------------------------------
+# Dataset size and cleaning
+# ---------------------------------------------------------------------------
+# TWO DIFFERENT CAPS. Keeping them separate matters.
+#
+# DOWNLOAD_MAX_PER_QUERY caps the raw UniProt download. It MUST stay None for
+# the labeling report to be correct. The evidence classes are computed by set
+# arithmetic (EC - GO, GO - EC, EC & GO), so if any query is truncated, the
+# missing tail silently shifts proteins between categories: GO-only gets
+# undercounted and EC-only gets inflated. Since the GO-only count is the whole
+# quantitative justification for consensus labeling, truncating the GO query
+# corrupts the headline result. Only set this to a number for a fast smoke test.
+DOWNLOAD_MAX_PER_QUERY = None
+
+# MAX_PER_CLASS caps each class AFTER labeling and balancing, in preprocessing.
+# This is purely about training time and class balance, and it is safe: by then
+# every protein already has its correct evidence class, and the labeling report
+# is computed on the full cleaned set before any capping happens.
+# Set to None to train on everything.
+MAX_PER_CLASS = None
+
+# Length window. Very short fragments give unstable physicochemical estimates;
+# very long sequences are dominated by multi-domain proteins whose global
+# composition averages out any functional signal.
+MIN_SEQUENCE_LENGTH = 50
+MAX_SEQUENCE_LENGTH = 2000
+
+# The 20 standard amino acids, in fixed alphabetical order.
+# This ordering defines feature columns 1-20 and must never change, because
+# training and inference share it.
+STANDARD_AMINO_ACIDS = "ACDEFGHIKLMNPQRSTVWY"
+
+# Ambiguous / non-standard residues that break BioPython's ProtParam
+# (molecular weight and GRAVY have no defined value for them).
+NON_STANDARD_RESIDUES = "XBZJUO"
+
+# ---------------------------------------------------------------------------
+# Homology-aware splitting (cluster_sequences.py)
+# ---------------------------------------------------------------------------
+# Proteins sharing at least this fraction of identical residues are treated as
+# one family and kept on the same side of every train/test split. 0.4 is a
+# conventional "same family" threshold; published enzyme classifiers use
+# values between 0.3 and 0.5.
+CLUSTER_MIN_SEQ_ID = 0.4
+# Alignment must cover at least this fraction of the sequences, so two proteins
+# that merely share one short domain are not merged into one family.
+CLUSTER_COVERAGE = 0.8
+
+# ---------------------------------------------------------------------------
+# KEGG REST API (academic, non-commercial use only)
+# ---------------------------------------------------------------------------
+KEGG_BASE_URL = "https://rest.kegg.jp"
+KEGG_ORGANISM = "hsa"
+# (connect timeout, read timeout) in seconds. The read timeout applies per
+# streamed chunk, so a slow but steady download is allowed to finish.
+DOWNLOAD_TIMEOUT = (30, 300)
+DOWNLOAD_RETRIES = 2
+# KEGG pathway map numbers below 01300 belong to the Metabolism category
+# (00010-00999 individual pathways, 01100-01240 overview maps).
+KEGG_METABOLIC_MAX = 1300
+
+# ---------------------------------------------------------------------------
+# Reproducibility
+# ---------------------------------------------------------------------------
+RANDOM_SEED = 42

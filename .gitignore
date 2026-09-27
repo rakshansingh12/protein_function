@@ -1,0 +1,20 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Downloaded data is reproducible from training/download_data.py
+data/raw/*.csv
+data/processed/*.csv
+data/raw/
+
+# Trained artefacts are reproducible from training/train.py
+models/*.joblib
+models/kegg_pathways.json
+models/sequence_index.json
+
+.pytest_cache/
+.DS_Store
+.vscode/
+.idea/

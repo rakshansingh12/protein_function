@@ -1,0 +1,2 @@
+3.12.14 (main, Aug 12 2026, 13:57:54) [Clang 21.0.0 (clang-2100.1.1.101)]
+sklearn 1.5.2 numpy 2.1.1 pandas 2.2.3 biopython 1.84 scipy 1.18.1 requests 2.32.3

@@ -1,0 +1,20 @@
+{
+  "label_agreement": {
+    "proteins_total": 10782,
+    "proteins_mapped_to_kegg": 10269,
+    "enzymes_mapped": 5270,
+    "enzymes_with_kegg_ec": 3337,
+    "non_enzymes_mapped": 4999,
+    "non_enzymes_with_kegg_ec": 16,
+    "go_only_mapped": 838,
+    "go_only_with_kegg_ec": 50
+  },
+  "false_positive_audit": {
+    "false_positives_mapped": 261,
+    "false_positives_with_kegg_ec": 1,
+    "true_negatives_mapped": 686,
+    "true_negatives_with_kegg_ec": 0,
+    "fisher_odds_ratio": Infinity,
+    "fisher_p_value": 0.2756071805702217
+  }
+}

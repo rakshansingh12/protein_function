@@ -1,0 +1,312 @@
+{
+  "best_model": "Extra Trees",
+  "selection_metric": "roc_auc",
+  "secondary_metric": "f1",
+  "selection_rule": "Ranked by cross-validated ROC-AUC, then F1, recall, accuracy. A simpler model within 0.005 ROC-AUC of the leader is preferred. An ensemble is adopted only if it exceeds the best individual model by more than 0.002 ROC-AUC.",
+  "ensemble_selected": false,
+  "ensemble_composition": null,
+  "ensemble_gain": -0.0025327124663598877,
+  "size_baseline": {
+    "description": "Logistic regression on molecular weight and sequence length only",
+    "cv": {
+      "accuracy": 0.5891014492753623,
+      "precision": 0.612400335422757,
+      "recall": 0.48574067153645756,
+      "f1": 0.5416462290773779,
+      "roc_auc": 0.636065309326716
+    },
+    "test": {
+      "accuracy": 0.5702364394993046,
+      "precision": 0.5912938331318017,
+      "recall": 0.4536178107606679,
+      "f1": 0.5133858267716536,
+      "roc_auc": 0.6169897228417023,
+      "confusion_matrix": [
+        [
+          741,
+          338
+        ],
+        [
+          589,
+          489
+        ]
+      ]
+    },
+    "lift_of_full_model": 0.2600355754400504
+  },
+  "models": {
+    "Logistic Regression": {
+      "cross_validation": {
+        "accuracy": 0.6854492753623188,
+        "precision": 0.6737486501679001,
+        "recall": 0.7194591789822907,
+        "f1": 0.6957900741432873,
+        "roc_auc": 0.743738859479558
+      },
+      "test": {
+        "accuracy": 0.6856745479833102,
+        "precision": 0.67825311942959,
+        "recall": 0.7059369202226345,
+        "f1": 0.6918181818181818,
+        "roc_auc": 0.7468417984769103,
+        "confusion_matrix": [
+          [
+            718,
+            361
+          ],
+          [
+            317,
+            761
+          ]
+        ]
+      },
+      "best_params": {
+        "model__C": "10.0"
+      }
+    },
+    "Random Forest": {
+      "cross_validation": {
+        "accuracy": 0.7831884057971015,
+        "precision": 0.7786373147468222,
+        "recall": 0.7915653321790656,
+        "f1": 0.7849342483919206,
+        "roc_auc": 0.8627166604382813
+      },
+      "test": {
+        "accuracy": 0.7909133055169216,
+        "precision": 0.7878787878787878,
+        "recall": 0.7959183673469388,
+        "f1": 0.7918781725888325,
+        "roc_auc": 0.8698255273126185,
+        "confusion_matrix": [
+          [
+            848,
+            231
+          ],
+          [
+            220,
+            858
+          ]
+        ]
+      },
+      "best_params": {
+        "model__max_depth": "None",
+        "model__min_samples_split": "2",
+        "model__n_estimators": "300"
+      }
+    },
+    "Extra Trees": {
+      "cross_validation": {
+        "accuracy": 0.790608695652174,
+        "precision": 0.7697047056127283,
+        "recall": 0.8295878780383543,
+        "f1": 0.7984836363232723,
+        "roc_auc": 0.8718058464375875
+      },
+      "test": {
+        "accuracy": 0.7918405192396848,
+        "precision": 0.7766051011433597,
+        "recall": 0.8191094619666048,
+        "f1": 0.7972911963882618,
+        "roc_auc": 0.8770252982817527,
+        "confusion_matrix": [
+          [
+            825,
+            254
+          ],
+          [
+            195,
+            883
+          ]
+        ]
+      },
+      "best_params": {
+        "model__max_depth": "None",
+        "model__min_samples_split": "2",
+        "model__n_estimators": "300"
+      }
+    },
+    "Neural Network (MLP)": {
+      "cross_validation": {
+        "accuracy": 0.7648695652173914,
+        "precision": 0.7499158930768678,
+        "recall": 0.7957354827088369,
+        "f1": 0.7716199074460315,
+        "roc_auc": 0.8421779095745968
+      },
+      "test": {
+        "accuracy": 0.7714418173388966,
+        "precision": 0.7783063748810657,
+        "recall": 0.7588126159554731,
+        "f1": 0.7684358853922029,
+        "roc_auc": 0.8555532247442748,
+        "confusion_matrix": [
+          [
+            846,
+            233
+          ],
+          [
+            260,
+            818
+          ]
+        ]
+      },
+      "best_params": {
+        "model__alpha": "0.0001",
+        "model__hidden_layer_sizes": "(64, 32)"
+      }
+    },
+    "Ensemble (RF + ET)": {
+      "cross_validation": {
+        "accuracy": 0.7908405797101449,
+        "precision": 0.7777746189113056,
+        "recall": 0.8145171567375448,
+        "f1": 0.7956682850252548,
+        "roc_auc": 0.8692731339712276
+      },
+      "test": {
+        "accuracy": 0.7913769123783032,
+        "precision": 0.781867145421903,
+        "recall": 0.8079777365491652,
+        "f1": 0.7947080291970803,
+        "roc_auc": 0.8757473163669378,
+        "confusion_matrix": [
+          [
+            836,
+            243
+          ],
+          [
+            207,
+            871
+          ]
+        ]
+      },
+      "best_params": null
+    },
+    "Ensemble (ET + MLP)": {
+      "cross_validation": {
+        "accuracy": 0.7852753623188405,
+        "precision": 0.765180207272349,
+        "recall": 0.8237930598758446,
+        "f1": 0.7932012794618233,
+        "roc_auc": 0.8639696413256515
+      },
+      "test": {
+        "accuracy": 0.7909133055169216,
+        "precision": 0.7889400921658987,
+        "recall": 0.7940630797773655,
+        "f1": 0.7914932963476653,
+        "roc_auc": 0.8728637971322997,
+        "confusion_matrix": [
+          [
+            850,
+            229
+          ],
+          [
+            222,
+            856
+          ]
+        ]
+      },
+      "best_params": null
+    },
+    "Ensemble (RF + MLP)": {
+      "cross_validation": {
+        "accuracy": 0.784695652173913,
+        "precision": 0.7717187690692184,
+        "recall": 0.8091839560374565,
+        "f1": 0.7897612469215669,
+        "roc_auc": 0.861383293050466
+      },
+      "test": {
+        "accuracy": 0.7881316643486324,
+        "precision": 0.7904583723105706,
+        "recall": 0.7838589981447124,
+        "f1": 0.7871448532836516,
+        "roc_auc": 0.871391087397972,
+        "confusion_matrix": [
+          [
+            855,
+            224
+          ],
+          [
+            233,
+            845
+          ]
+        ]
+      },
+      "best_params": null
+    },
+    "Ensemble (RF + ET + MLP)": {
+      "cross_validation": {
+        "accuracy": 0.7910724637681159,
+        "precision": 0.7755198771850487,
+        "recall": 0.819849013181773,
+        "f1": 0.7968938483635031,
+        "roc_auc": 0.8674907851260777
+      },
+      "test": {
+        "accuracy": 0.7969401947148818,
+        "precision": 0.7946593001841621,
+        "recall": 0.800556586270872,
+        "f1": 0.7975970425138632,
+        "roc_auc": 0.8758771349132795,
+        "confusion_matrix": [
+          [
+            856,
+            223
+          ],
+          [
+            215,
+            863
+          ]
+        ]
+      },
+      "best_params": null
+    },
+    "Ensemble (all four)": {
+      "cross_validation": {
+        "accuracy": 0.7867826086956521,
+        "precision": 0.7683674053544501,
+        "recall": 0.8217046239713083,
+        "f1": 0.7939909508006833,
+        "roc_auc": 0.8606044312050178
+      },
+      "test": {
+        "accuracy": 0.7904496986555402,
+        "precision": 0.7866300366300366,
+        "recall": 0.7968460111317254,
+        "f1": 0.791705069124424,
+        "roc_auc": 0.8693922256744977,
+        "confusion_matrix": [
+          [
+            846,
+            233
+          ],
+          [
+            219,
+            859
+          ]
+        ]
+      },
+      "best_params": null
+    }
+  },
+  "learning_curve": {
+    "train_sizes": [
+      690,
+      1725,
+      3450,
+      5175,
+      6900
+    ],
+    "cv_roc_auc": [
+      0.8312618798611652,
+      0.8463031619586345,
+      0.859172933139402,
+      0.8692002753036002,
+      0.8718058464375875
+    ],
+    "final_gain": 0.0026055711339872945
+  }
+}

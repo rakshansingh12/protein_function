@@ -1,0 +1,4 @@
+Proteins processed          : 20430
+Unique sequence hashes       : 20352
+Duplicate-sequence collisions: 78
+Saved -> /Users/rakshansingh/Downloads/protein-function-classifier/models/sequence_index.json

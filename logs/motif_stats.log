@@ -1,0 +1,16 @@
+Motif match rates by class
+------------------------------------------------------------------------
+Serine protease-related (simplified):
+  Enzymes     : 4574 / 5391 (84.8%)
+  Non-enzymes : 4245 / 5391 (78.7%)
+  Ratio (enzyme% / non-enzyme%): 1.078
+HEXXH zinc-binding:
+  Enzymes     : 204 / 5391 (3.8%)
+  Non-enzymes : 173 / 5391 (3.2%)
+  Ratio (enzyme% / non-enzyme%): 1.179
+Walker A / P-loop:
+  Enzymes     : 696 / 5391 (12.9%)
+  Non-enzymes : 180 / 5391 (3.3%)
+  Ratio (enzyme% / non-enzyme%): 3.867
+
+Saved -> /Users/rakshansingh/Downloads/protein-function-classifier/models/motif_stats.json

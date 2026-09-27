@@ -1,0 +1,29 @@
+{
+  "Serine protease-related (simplified)": {
+    "enzyme_hits": 4574,
+    "enzyme_total": 5391,
+    "enzyme_pct": 0.8484511222407717,
+    "non_enzyme_hits": 4245,
+    "non_enzyme_total": 5391,
+    "non_enzyme_pct": 0.7874234835837507,
+    "ratio_enzyme_over_non_enzyme": 1.0775029446407538
+  },
+  "HEXXH zinc-binding": {
+    "enzyme_hits": 204,
+    "enzyme_total": 5391,
+    "enzyme_pct": 0.037840845854201444,
+    "non_enzyme_hits": 173,
+    "non_enzyme_total": 5391,
+    "non_enzyme_pct": 0.03209052123910221,
+    "ratio_enzyme_over_non_enzyme": 1.1791907514450866
+  },
+  "Walker A / P-loop": {
+    "enzyme_hits": 696,
+    "enzyme_total": 5391,
+    "enzyme_pct": 0.12910406232609906,
+    "non_enzyme_hits": 180,
+    "non_enzyme_total": 5391,
+    "non_enzyme_pct": 0.0333889816360601,
+    "ratio_enzyme_over_non_enzyme": 3.8666666666666667
+  }
+}

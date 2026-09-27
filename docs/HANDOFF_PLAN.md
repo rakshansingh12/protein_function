@@ -11,7 +11,7 @@ without waiting for me, unless a STOP condition occurs.
 - [x] Phase 0 — Preflight and git baseline — done; all packages already installed, artefacts verified, git initialized, baseline committed (`7c2fa39`)
 - [x] Phase 1 — KEGG script correction and GO-only characterisation — done; Question 2 now INCONCLUSIVE (1/261 supported), GO-only ATPase/GTPase/transporter share 7.5% (`0a97b1e`)
 - [x] Phase 2 — AlphaFold pLDDT analysis (analysis only) — done; H1 SUPPORTED, H2 SUPPORTED, 0/2890 (0.0%) failures
-- [ ] Phase 3 — Helper artefacts (sequence index, KEGG pathways, motif stats)
+- [x] Phase 3 — Helper artefacts (sequence index, KEGG pathways, motif stats) — done; 20352 sequence hashes (78 collisions), 19020 accessions with a KEGG gene, Walker A/P-loop ratio 3.867 is the only informative motif
 - [ ] Phase 4 — FastAPI backend
 - [ ] Phase 5 — Frontend (exactly 3 files)
 - [ ] Phase 6 — Tests, API docs, end-to-end check

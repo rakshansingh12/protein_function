@@ -1,0 +1,5 @@
+Accessions in sequence index    : 20352
+Accessions with a KEGG gene      : 19020
+  with at least one EC number    : 3463
+  with at least one pathway      : 8412
+Saved -> /Users/rakshansingh/Downloads/protein-function-classifier/models/kegg_pathways.json

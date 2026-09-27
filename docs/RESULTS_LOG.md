@@ -331,3 +331,26 @@ Saved -> /Users/rakshansingh/Downloads/protein-function-classifier/data/processe
 **GO-only placement.** On both metrics, GO_only medians sit between EC_backed and non_enzyme: mean_plddt EC_backed 86.03 > GO_only 81.56 > non_enzyme 73.41; frac_very_low EC_backed 0.0935 < GO_only 0.1185 < non_enzyme 0.2065. GO_only is closer to EC_backed than to non_enzyme on both metrics, and is statistically distinguishable from both (GO_only vs EC_backed mean_plddt p=7.921e-20; GO_only vs non_enzyme mean_plddt p=9.429e-33).
 
 Caveat: pLDDT is AlphaFold's prediction confidence, a proxy for disorder, not a direct measurement of it.
+
+## 8. Motif match rates by class
+
+```
+Motif match rates by class
+------------------------------------------------------------------------
+Serine protease-related (simplified):
+  Enzymes     : 4574 / 5391 (84.8%)
+  Non-enzymes : 4245 / 5391 (78.7%)
+  Ratio (enzyme% / non-enzyme%): 1.078
+HEXXH zinc-binding:
+  Enzymes     : 204 / 5391 (3.8%)
+  Non-enzymes : 173 / 5391 (3.2%)
+  Ratio (enzyme% / non-enzyme%): 1.179
+Walker A / P-loop:
+  Enzymes     : 696 / 5391 (12.9%)
+  Non-enzymes : 180 / 5391 (3.3%)
+  Ratio (enzyme% / non-enzyme%): 3.867
+
+Saved -> /Users/rakshansingh/Downloads/protein-function-classifier/models/motif_stats.json
+```
+
+A motif found at similar rates in both classes carries little class information in this dataset. This applies to Serine protease-related (simplified) (ratio 1.078) and HEXXH zinc-binding (ratio 1.179). Walker A / P-loop (ratio 3.867) falls outside that range and is not covered by this statement.

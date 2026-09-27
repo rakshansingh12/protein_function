@@ -170,3 +170,11 @@ KEGG_METABOLIC_MAX = 1300
 # Reproducibility
 # ---------------------------------------------------------------------------
 RANDOM_SEED = 42
+
+# ---------------------------------------------------------------------------
+# AlphaFold pLDDT analysis (analysis only, not a model feature)
+# ---------------------------------------------------------------------------
+ALPHAFOLD_API_URL = "https://alphafold.ebi.ac.uk/api/prediction"
+ALPHAFOLD_CACHE_DIR = RAW_DIR / "alphafold"
+ALPHAFOLD_SAMPLE_PER_GROUP = 1000
+ALPHAFOLD_REPORT_JSON = PROCESSED_DIR / "alphafold_analysis.json"

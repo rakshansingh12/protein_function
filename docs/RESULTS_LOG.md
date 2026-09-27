@@ -234,3 +234,100 @@ Saved -> data/processed/go_only_proteins.csv
 ```
 
 Most GO-only proteins do not fall into the ATPase/GTPase/transporter boundary categories (7.5%); by name, the group is dominated by other catalytic or uncharacterised proteins. 65.3% of GO-only proteins match none of the keyword groups scanned.
+
+## 7. AlphaFold pLDDT analysis
+
+```
+========================================================================
+ALPHAFOLD pLDDT ANALYSIS (analysis only, not a model feature)
+========================================================================
+
+Fetching AlphaFold data for group 'GO_only' (890 proteins)...
+  [GO_only] 100 / 890 processed
+  [GO_only] 200 / 890 processed
+  [GO_only] 300 / 890 processed
+  [GO_only] 400 / 890 processed
+  [GO_only] 500 / 890 processed
+  [GO_only] 600 / 890 processed
+  [GO_only] 700 / 890 processed
+  [GO_only] 800 / 890 processed
+  [GO_only] done: 890 with data, 0 missing, 0 failed
+
+Fetching AlphaFold data for group 'EC_backed' (1000 proteins)...
+  [EC_backed] 100 / 1000 processed
+  [EC_backed] 200 / 1000 processed
+  [EC_backed] 300 / 1000 processed
+  [EC_backed] 400 / 1000 processed
+  [EC_backed] 500 / 1000 processed
+  [EC_backed] 600 / 1000 processed
+  [EC_backed] 700 / 1000 processed
+  [EC_backed] 800 / 1000 processed
+  [EC_backed] 900 / 1000 processed
+  [EC_backed] 1000 / 1000 processed
+  [EC_backed] done: 1000 with data, 0 missing, 0 failed
+
+Fetching AlphaFold data for group 'non_enzyme' (1000 proteins)...
+  [non_enzyme] 100 / 1000 processed
+  [non_enzyme] 200 / 1000 processed
+  [non_enzyme] 300 / 1000 processed
+  [non_enzyme] 400 / 1000 processed
+  [non_enzyme] 500 / 1000 processed
+  [non_enzyme] 600 / 1000 processed
+  [non_enzyme] 700 / 1000 processed
+  [non_enzyme] 800 / 1000 processed
+  [non_enzyme] 900 / 1000 processed
+  [non_enzyme] 1000 / 1000 processed
+  [non_enzyme] done: 1000 with data, 0 missing, 0 failed
+
+Overall non-404 failure rate: 0 / 2890 (0.0%)
+
+========================================================================
+PER-GROUP SUMMARY
+========================================================================
+
+GO_only:
+  n requested        : 890
+  n with AlphaFold    : 890
+  n missing           : 0
+  mean_plddt   median : 81.56 (IQR 72.84-88.11)
+  frac_very_low median: 0.1185 (IQR 0.0420-0.2407)
+
+EC_backed:
+  n requested        : 1000
+  n with AlphaFold    : 1000
+  n missing           : 0
+  mean_plddt   median : 86.03 (IQR 77.91-91.62)
+  frac_very_low median: 0.0935 (IQR 0.0340-0.1963)
+
+non_enzyme:
+  n requested        : 1000
+  n with AlphaFold    : 1000
+  n missing           : 0
+  mean_plddt   median : 73.41 (IQR 63.21-83.38)
+  frac_very_low median: 0.2065 (IQR 0.0850-0.3770)
+
+========================================================================
+STATISTICAL COMPARISONS
+========================================================================
+  EC_backed vs non_enzyme  mean_plddt       p=4.948e-87  P(superiority)=0.755
+  EC_backed vs non_enzyme  frac_very_low    p=8.012e-42  P(superiority)=0.325
+  GO_only vs EC_backed     mean_plddt       p=7.921e-20  P(superiority)=0.379
+  GO_only vs EC_backed     frac_very_low    p=0.0002226  P(superiority)=0.549
+  GO_only vs non_enzyme    mean_plddt       p=9.429e-33  P(superiority)=0.659
+  GO_only vs non_enzyme    frac_very_low    p=9.649e-22  P(superiority)=0.373
+
+========================================================================
+INSTABILITY INDEX vs PREDICTED DISORDER
+========================================================================
+  Spearman rho = 0.5347, p = 1.69e-213 (n = 2890)
+
+Saved -> /Users/rakshansingh/Downloads/protein-function-classifier/data/processed/alphafold_analysis.json
+```
+
+**H1 (enzymes are more ordered than non-enzymes): SUPPORTED.** EC_backed vs non_enzyme mean_plddt p=4.948e-87 (<0.01) with probability of superiority 0.755 (>=0.60, EC_backed higher); frac_very_low p=8.012e-42 (<0.01), EC_backed lower (median 0.0935 vs non_enzyme's 0.2065).
+
+**H2 (instability index tracks predicted disorder): SUPPORTED.** Spearman rho = 0.5347 (>0.10), p = 1.69e-213 (<0.01), n = 2890.
+
+**GO-only placement.** On both metrics, GO_only medians sit between EC_backed and non_enzyme: mean_plddt EC_backed 86.03 > GO_only 81.56 > non_enzyme 73.41; frac_very_low EC_backed 0.0935 < GO_only 0.1185 < non_enzyme 0.2065. GO_only is closer to EC_backed than to non_enzyme on both metrics, and is statistically distinguishable from both (GO_only vs EC_backed mean_plddt p=7.921e-20; GO_only vs non_enzyme mean_plddt p=9.429e-33).
+
+Caveat: pLDDT is AlphaFold's prediction confidence, a proxy for disorder, not a direct measurement of it.

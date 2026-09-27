@@ -1,0 +1,99 @@
+{
+  "groups": {
+    "GO_only": {
+      "n_requested": 890,
+      "n_with_data": 890,
+      "n_missing": 0,
+      "mean_plddt": {
+        "median": 81.56,
+        "q1": 72.8425,
+        "q3": 88.105
+      },
+      "frac_very_low": {
+        "median": 0.1185,
+        "q1": 0.042,
+        "q3": 0.24075
+      }
+    },
+    "EC_backed": {
+      "n_requested": 1000,
+      "n_with_data": 1000,
+      "n_missing": 0,
+      "mean_plddt": {
+        "median": 86.03,
+        "q1": 77.9075,
+        "q3": 91.62
+      },
+      "frac_very_low": {
+        "median": 0.0935,
+        "q1": 0.034,
+        "q3": 0.19625
+      }
+    },
+    "non_enzyme": {
+      "n_requested": 1000,
+      "n_with_data": 1000,
+      "n_missing": 0,
+      "mean_plddt": {
+        "median": 73.41,
+        "q1": 63.2125,
+        "q3": 83.38
+      },
+      "frac_very_low": {
+        "median": 0.2065,
+        "q1": 0.085,
+        "q3": 0.377
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "comparison": "EC_backed vs non_enzyme",
+      "metric": "mean_plddt",
+      "u_statistic": 755350.0,
+      "p_value": 4.947812806647771e-87,
+      "probability_of_superiority_a_over_b": 0.75535
+    },
+    {
+      "comparison": "EC_backed vs non_enzyme",
+      "metric": "frac_very_low",
+      "u_statistic": 325052.0,
+      "p_value": 8.012038627049796e-42,
+      "probability_of_superiority_a_over_b": 0.325052
+    },
+    {
+      "comparison": "GO_only vs EC_backed",
+      "metric": "mean_plddt",
+      "u_statistic": 337062.5,
+      "p_value": 7.920580918617014e-20,
+      "probability_of_superiority_a_over_b": 0.37872191011235956
+    },
+    {
+      "comparison": "GO_only vs EC_backed",
+      "metric": "frac_very_low",
+      "u_statistic": 488715.0,
+      "p_value": 0.00022256672791697322,
+      "probability_of_superiority_a_over_b": 0.5491179775280899
+    },
+    {
+      "comparison": "GO_only vs non_enzyme",
+      "metric": "mean_plddt",
+      "u_statistic": 586152.5,
+      "p_value": 9.429290992798426e-33,
+      "probability_of_superiority_a_over_b": 0.6585983146067416
+    },
+    {
+      "comparison": "GO_only vs non_enzyme",
+      "metric": "frac_very_low",
+      "u_statistic": 331547.0,
+      "p_value": 9.648984854401096e-22,
+      "probability_of_superiority_a_over_b": 0.3725247191011236
+    }
+  ],
+  "spearman_instability_vs_frac_very_low": {
+    "rho": 0.5347422047603118,
+    "p_value": 1.690041804006267e-213,
+    "n": 2890
+  },
+  "caveat": "pLDDT is AlphaFold's prediction confidence, a proxy for disorder, not a direct measurement of it."
+}

@@ -1,0 +1,138 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --color-enzyme: var(--enzyme);
+  --color-non-enzyme: var(--non-enzyme);
+  --color-chem-hydrophobic: var(--chem-hydrophobic);
+  --color-chem-aromatic: var(--chem-aromatic);
+  --color-chem-polar: var(--chem-polar);
+  --color-chem-positive: var(--chem-positive);
+  --color-chem-negative: var(--chem-negative);
+  --color-chem-special: var(--chem-special);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+}
+
+:root {
+  color-scheme: light;
+  --background: oklch(0.982 0.004 95);
+  --foreground: oklch(0.2 0.02 265);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.02 265);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.02 265);
+  --primary: oklch(0.22 0.025 265);
+  --primary-foreground: oklch(0.98 0.004 95);
+  --secondary: oklch(0.95 0.006 265);
+  --secondary-foreground: oklch(0.22 0.025 265);
+  --muted: oklch(0.95 0.006 265);
+  --muted-foreground: oklch(0.48 0.02 265);
+  --accent: oklch(0.94 0.008 265);
+  --accent-foreground: oklch(0.22 0.025 265);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.2 0.02 265 / 11%);
+  --input: oklch(0.2 0.02 265 / 15%);
+  --ring: oklch(0.55 0.1 200);
+  --radius: 0.75rem;
+
+  --enzyme: oklch(0.6 0.12 172);
+  --non-enzyme: oklch(0.52 0.2 285);
+  --warning: oklch(0.7 0.15 70);
+
+  --chem-hydrophobic: oklch(0.72 0.14 80);
+  --chem-aromatic: oklch(0.66 0.16 45);
+  --chem-polar: oklch(0.7 0.14 130);
+  --chem-positive: oklch(0.62 0.13 235);
+  --chem-negative: oklch(0.6 0.18 15);
+  --chem-special: oklch(0.6 0.02 265);
+}
+
+.dark {
+  color-scheme: dark;
+  --background: oklch(0.145 0.014 265);
+  --foreground: oklch(0.96 0.005 265);
+  --card: oklch(0.2 0.018 265);
+  --card-foreground: oklch(0.96 0.005 265);
+  --popover: oklch(0.21 0.018 265);
+  --popover-foreground: oklch(0.96 0.005 265);
+  --primary: oklch(0.95 0.005 265);
+  --primary-foreground: oklch(0.17 0.015 265);
+  --secondary: oklch(0.25 0.018 265);
+  --secondary-foreground: oklch(0.96 0.005 265);
+  --muted: oklch(0.25 0.018 265);
+  --muted-foreground: oklch(0.7 0.015 265);
+  --accent: oklch(0.27 0.02 265);
+  --accent-foreground: oklch(0.96 0.005 265);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 9%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.7 0.1 190);
+
+  --enzyme: oklch(0.78 0.14 170);
+  --non-enzyme: oklch(0.7 0.17 285);
+  --warning: oklch(0.8 0.14 75);
+
+  --chem-hydrophobic: oklch(0.82 0.13 85);
+  --chem-aromatic: oklch(0.75 0.15 50);
+  --chem-polar: oklch(0.8 0.14 130);
+  --chem-positive: oklch(0.72 0.12 235);
+  --chem-negative: oklch(0.7 0.17 15);
+  --chem-special: oklch(0.7 0.02 265);
+}
+
+@utility glass {
+  background-color: color-mix(in oklch, var(--card) 72%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    overflow-x: hidden;
+  }
+  section[id],
+  [data-scroll-target] {
+    scroll-margin-top: 7rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}

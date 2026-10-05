@@ -27,7 +27,7 @@ Given a protein sequence, classify it as enzyme or non-enzyme, report a
 calibrated probability, show the nearest known proteins by feature
 similarity, scan for known catalytic motifs, and pull in supplementary
 UniProt / PDB / KEGG / AlphaFold records when the sequence matches a known
-protein. Served through a FastAPI backend and a minimal web frontend.
+protein. Served through a FastAPI backend and a Next.js web frontend.
 
 ---
 
@@ -363,9 +363,15 @@ python training/build_sequence_index.py   # accession lookup by sequence hash
 python training/build_kegg_pathways.py    # precomputed per-accession KEGG map
 python training/motif_stats.py            # class match rates for each motif
 
-# Run the app
+# Build the frontend (Next.js, once and after UI changes)
+cd frontend && npm install && npm run build && cd ..
+
+# Run the app (serves the API and frontend/out/ on one origin)
 uvicorn backend.app.main:app --reload
 # open http://127.0.0.1:8000/
+
+# Optional: live-reload UI development (with uvicorn running on :8000)
+cd frontend && npm run dev   # open http://localhost:3000/, /api is proxied
 
 # Tests
 pytest backend/tests -q

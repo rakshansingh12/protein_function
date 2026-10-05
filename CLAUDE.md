@@ -27,8 +27,12 @@ explain and defend every part in a viva. Simplicity and honesty beat cleverness.
    Allowed packages: fastapi, uvicorn[standard], pydantic, scikit-learn, joblib,
    numpy, pandas, biopython, requests, scipy, pytest, httpx. No torch,
    tensorflow, rdkit, or any other dependency.
-6. Frontend = exactly 3 files: `frontend/index.html`, `style.css`, `script.js`.
-   Vanilla HTML/CSS/JS. No frameworks, CDNs, chart or 3D libraries.
+6. Frontend = Next.js + TypeScript + Tailwind app in `frontend/` (built with
+   v0, replaced the earlier 3-file vanilla UI). Use `npm` (not pnpm). `npm run
+   build` writes a static export to `frontend/out/`, which FastAPI serves at `/`;
+   `npm run dev` proxies `/api/*` to the backend (PROTCLASS_API_URL, default
+   http://localhost:8000). No mock data: every number shown must come from the
+   API or be copied exactly from a file in `models/`.
 7. Git: commit locally at the end of each phase. Never push. Never commit
    `data/raw/`, KEGG-derived files, or `*.joblib` (enforced via .gitignore).
 8. Network: UniProt, AlphaFold DB and KEGG are shared academic services. Cache

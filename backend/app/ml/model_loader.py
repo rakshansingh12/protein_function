@@ -30,6 +30,7 @@ OPTIONAL_FILES = {
     "sequence_index": MODELS_DIR / "sequence_index.json",
     "kegg_pathways": MODELS_DIR / "kegg_pathways.json",
     "motif_stats": MODELS_DIR / "motif_stats.json",
+    "class_stats_all": MODELS_DIR / "class_stats_all.json",
 }
 
 

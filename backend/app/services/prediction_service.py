@@ -30,17 +30,32 @@ def _dataset_match(cleaned_sequence, sequence_index, training_features):
     }
 
 
-def _comparison_rows(feature_values, class_stats):
+def _comparison_order():
+    # Headline properties first (the ones a biologist reads first), then the
+    # remaining global features, then the 20 amino-acid fractions.
+    rest = [f for f in FEATURE_NAMES if f not in COMPARISON_PROPERTIES]
+    globals_first = [f for f in rest if not f.startswith("aa_")]
+    amino_acids = [f for f in rest if f.startswith("aa_")]
+    return COMPARISON_PROPERTIES + globals_first + amino_acids
+
+
+def _comparison_rows(feature_values, class_stats, class_stats_all=None):
+    # class_stats_all.json (all 29 features, training split) is optional; fall
+    # back to the 5 headline properties in class_stats.json if it is absent.
+    if class_stats_all:
+        stats, properties = class_stats_all, _comparison_order()
+    else:
+        stats, properties = class_stats, COMPARISON_PROPERTIES
     rows = []
-    for prop in COMPARISON_PROPERTIES:
+    for prop in properties:
         idx = FEATURE_NAMES.index(prop)
         rows.append({
             "property": prop,
             "input": feature_values[idx],
-            "enzyme_mean": class_stats["enzyme"][prop]["mean"],
-            "enzyme_std": class_stats["enzyme"][prop]["std"],
-            "non_enzyme_mean": class_stats["non_enzyme"][prop]["mean"],
-            "non_enzyme_std": class_stats["non_enzyme"][prop]["std"],
+            "enzyme_mean": stats["enzyme"][prop]["mean"],
+            "enzyme_std": stats["enzyme"][prop]["std"],
+            "non_enzyme_mean": stats["non_enzyme"][prop]["mean"],
+            "non_enzyme_std": stats["non_enzyme"][prop]["std"],
         })
     return rows
 
@@ -67,7 +82,9 @@ def predict(raw_sequence, artefacts):
             if stat:
                 match["class_rates"] = stat
 
-    comparison = _comparison_rows(features, artefacts["class_stats"])
+    comparison = _comparison_rows(
+        features, artefacts["class_stats"], artefacts.get("class_stats_all")
+    )
 
     dataset_match = _dataset_match(
         cleaned_sequence, artefacts.get("sequence_index"), artefacts["training_features"]

@@ -178,3 +178,8 @@ ALPHAFOLD_API_URL = "https://alphafold.ebi.ac.uk/api/prediction"
 ALPHAFOLD_CACHE_DIR = RAW_DIR / "alphafold"
 ALPHAFOLD_SAMPLE_PER_GROUP = 1000
 ALPHAFOLD_REPORT_JSON = PROCESSED_DIR / "alphafold_analysis.json"
+
+# ---------------------------------------------------------------------------
+# Per-class mean/std for ALL 29 features (comparison dashboard, paginated)
+# ---------------------------------------------------------------------------
+CLASS_STATS_ALL_JSON = MODELS_DIR / "class_stats_all.json"

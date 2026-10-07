@@ -395,3 +395,18 @@ Predict response, scalar/small fields (verbatim):
 ```
 
 Invalid-sequence response body: `{"detail":"Sequence is too short (5 residues). Minimum is 50; physicochemical estimates are unstable on very short fragments."}`
+
+## Class stats for all 29 features (2026-10-05)
+
+New script `training/class_stats_all.py` (no re-training) wrote
+`models/class_stats_all.json`: per-class mean/std for all 29 features, training
+split only, same method as `train.compute_class_stats`. Output:
+
+```
+Sanity check passed: the 5 existing properties match class_stats.json
+Training rows: 8692  (enzyme 4335, non_enzyme 4357)
+Wrote 29 features x 2 classes to models/class_stats_all.json
+```
+
+`/api/predict` now returns 29 comparison rows (5 headline properties first);
+it falls back to the 5 in `class_stats.json` if the new file is absent.

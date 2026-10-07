@@ -24,3 +24,7 @@ frontend/node_modules/
 frontend/.next/
 frontend/out/
 frontend/next-env.d.ts
+
+# Local build/run noise
+frontend/tsconfig.tsbuildinfo
+logs/uvicorn_dev.log

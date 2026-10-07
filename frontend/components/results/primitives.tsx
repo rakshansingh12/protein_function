@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { CountUp } from '@/components/motion-primitives'
 import { cn } from '@/lib/utils'
 
@@ -113,5 +114,43 @@ export function ExternalLink({ href, children, className }: { href: string; chil
       {children}
       <span className="sr-only"> (opens in a new tab)</span>
     </a>
+  )
+}
+
+// Shared pager for long result lists (e.g. dozens of PDB entries), so a
+// results card never grows into an endless scroll.
+export function Pager({
+  page,
+  pageCount,
+  total,
+  pageSize,
+  onChange,
+  label,
+}: {
+  page: number
+  pageCount: number
+  total: number
+  pageSize: number
+  onChange: (page: number) => void
+  label: string
+}) {
+  if (pageCount <= 1) return null
+  const first = page * pageSize + 1
+  const last = Math.min(total, (page + 1) * pageSize)
+  const btn =
+    'inline-flex size-7 items-center justify-center rounded-lg border transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-40'
+  return (
+    <nav aria-label={label} className="mt-3 flex items-center justify-between gap-2 text-xs text-muted-foreground">
+      <span aria-live="polite">{`${first}–${last} of ${total}`}</span>
+      <div className="flex items-center gap-1.5">
+        <button type="button" className={btn} onClick={() => onChange(page - 1)} disabled={page === 0} aria-label="Previous page">
+          <ChevronLeft className="size-3.5" aria-hidden="true" />
+        </button>
+        <span className="min-w-12 text-center font-mono">{`${page + 1} / ${pageCount}`}</span>
+        <button type="button" className={btn} onClick={() => onChange(page + 1)} disabled={page >= pageCount - 1} aria-label="Next page">
+          <ChevronRight className="size-3.5" aria-hidden="true" />
+        </button>
+      </div>
+    </nav>
   )
 }

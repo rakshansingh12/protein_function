@@ -1,8 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ResultBlock } from '@/components/results/primitives'
-import { PROPERTY_META } from '@/lib/constants'
+import { useState } from 'react'
+import { Pager, ResultBlock } from '@/components/results/primitives'
+import { AA_NAMES, PROPERTY_META } from '@/lib/constants'
 import { fmt } from '@/lib/format'
 import type { ComparisonRow } from '@/lib/types'
 import { cn } from '@/lib/utils'
@@ -16,8 +17,18 @@ function gaussian(x: number, m: number, s: number) {
   return Math.exp(-0.5 * ((x - m) / s) ** 2) / s
 }
 
+// aa_X features are fractions (0-1) of residue X in the sequence.
+function aminoAcidMeta(property: string) {
+  const residue = property.replace(/^aa_/, '')
+  const name = AA_NAMES[residue]
+  return { label: name ? `${name} (${residue}) fraction` : property, floor: 0, ceil: 1 } as { label: string; unit?: string; floor?: number; ceil?: number }
+}
+
+// Six curves fit a 3-column grid as two full rows; the rest are a page away.
+const WHY_PAGE_SIZE = 6
+
 function CurveCard({ row, index }: { row: ComparisonRow; index: number }) {
-  const meta = PROPERTY_META[row.property] ?? { label: row.property }
+  const meta = PROPERTY_META[row.property] ?? aminoAcidMeta(row.property)
   const { enzyme_mean: em, enzyme_std: es, non_enzyme_mean: nm, non_enzyme_std: ns, input } = row
 
   let lo = Math.min(em - 3 * es, nm - 3 * ns, input)
@@ -130,6 +141,9 @@ function CurveCard({ row, index }: { row: ComparisonRow; index: number }) {
 }
 
 export function WhyBlock({ rows }: { rows: ComparisonRow[] }) {
+  const [page, setPage] = useState(0)
+  const pageCount = Math.ceil(rows.length / WHY_PAGE_SIZE)
+  const shown = rows.slice(page * WHY_PAGE_SIZE, (page + 1) * WHY_PAGE_SIZE)
   const enzymeCloser = rows.filter((r) => Math.abs(r.input - r.enzyme_mean) / r.enzyme_std <= Math.abs(r.input - r.non_enzyme_mean) / r.non_enzyme_std).length
 
   return (
@@ -137,7 +151,7 @@ export function WhyBlock({ rows }: { rows: ComparisonRow[] }) {
       id="why"
       label="Why"
       question="Where does this protein sit compared with real enzymes and non-enzymes?"
-      answer={`On ${enzymeCloser} of ${rows.length} headline properties, this protein is closer (in standard deviations) to the enzyme average than to the non-enzyme average.`}
+      answer={`On ${enzymeCloser} of ${rows.length} properties, this protein is closer (in standard deviations) to the enzyme average than to the non-enzyme average.`}
     >
       <div className="mb-4 flex flex-wrap gap-4 text-xs text-muted-foreground">
         <span className="inline-flex items-center gap-2">
@@ -154,10 +168,18 @@ export function WhyBlock({ rows }: { rows: ComparisonRow[] }) {
         </span>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {rows.map((r, i) => (
+        {shown.map((r, i) => (
           <CurveCard key={r.property} row={r} index={i} />
         ))}
       </div>
+      <Pager
+        page={page}
+        pageCount={pageCount}
+        total={rows.length}
+        pageSize={WHY_PAGE_SIZE}
+        onChange={setPage}
+        label="Property comparison pages"
+      />
       <p className="mt-6 rounded-2xl border border-dashed p-4 text-sm leading-relaxed text-muted-foreground">
         {"The curves overlap heavily. A single property can't separate the classes; the model combines all 29."}
       </p>

@@ -1,9 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import { AlertCircle, ArrowUpRight } from 'lucide-react'
 import useSWR from 'swr'
-import { ExternalLink, Ring, ResultBlock } from '@/components/results/primitives'
+import { ExternalLink, Pager, Ring, ResultBlock } from '@/components/results/primitives'
 import { Skeleton } from '@/components/ui/skeleton'
 import { api } from '@/lib/api'
 import { fmt, pct } from '@/lib/format'
@@ -30,6 +31,48 @@ function Chip({ href, children }: { href?: string; children: React.ReactNode }) 
     </a>
   ) : (
     <span className={cls}>{children}</span>
+  )
+}
+
+// Well-studied proteins can have dozens of PDB entries; show them a page at a time.
+const PDB_PAGE_SIZE = 6
+
+function PdbList({ entries }: { entries: NonNullable<EnrichResponse['pdb']> }) {
+  const [page, setPage] = useState(0)
+  const pageCount = Math.ceil(entries.length / PDB_PAGE_SIZE)
+  const shown = entries.slice(page * PDB_PAGE_SIZE, (page + 1) * PDB_PAGE_SIZE)
+  return (
+    <div>
+      <ul className="grid gap-2 sm:grid-cols-2">
+        {shown.map((e) => (
+          <li key={e.id}>
+            <a
+              href={e.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block rounded-xl border p-3 transition-colors hover:bg-muted"
+            >
+              <span className="flex items-center justify-between font-mono text-sm font-semibold">
+                {e.id}
+                <ArrowUpRight className="size-3.5" aria-hidden="true" />
+              </span>
+              <span className="mt-1 block text-xs text-muted-foreground">
+                {[e.method, e.resolution, e.chains].filter(Boolean).join(' · ')}
+              </span>
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <Pager
+        page={page}
+        pageCount={pageCount}
+        total={entries.length}
+        pageSize={PDB_PAGE_SIZE}
+        onChange={setPage}
+        label="PDB structures pages"
+      />
+    </div>
   )
 }
 
@@ -99,27 +142,7 @@ function Cards({ data }: { data: EnrichResponse }) {
 
       <SourceCard title="RCSB PDB">
         {pdb && pdb.length > 0 ? (
-          <ul className="grid gap-2 sm:grid-cols-2">
-            {pdb.map((e) => (
-              <li key={e.id}>
-                <a
-                  href={e.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block rounded-xl border p-3 transition-colors hover:bg-muted"
-                >
-                  <span className="flex items-center justify-between font-mono text-sm font-semibold">
-                    {e.id}
-                    <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                  </span>
-                  <span className="mt-1 block text-xs text-muted-foreground">
-                    {[e.method, e.resolution, e.chains].filter(Boolean).join(' · ')}
-                  </span>
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </li>
-            ))}
-          </ul>
+          <PdbList entries={pdb} />
         ) : pdb ? (
           <p className="text-sm text-muted-foreground">No experimental structures listed.</p>
         ) : (

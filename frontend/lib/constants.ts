@@ -6,6 +6,10 @@ export const PROPERTY_META: Record<string, { label: string; unit?: string; floor
   molecular_weight: { label: 'Molecular weight', unit: 'Da', floor: 0 },
   aromaticity: { label: 'Aromaticity', floor: 0, ceil: 1 },
   instability_index: { label: 'Instability index' },
+  sequence_length: { label: 'Sequence length', unit: 'residues', floor: 0 },
+  helix_fraction: { label: 'Helix propensity', floor: 0, ceil: 1 },
+  turn_fraction: { label: 'Turn propensity', floor: 0, ceil: 1 },
+  sheet_fraction: { label: 'Sheet propensity', floor: 0, ceil: 1 },
 }
 
 export const EVIDENCE_EXPLAINER: Record<string, string> = {
